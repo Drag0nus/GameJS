@@ -4,15 +4,15 @@ var Vector = function(x, y) {
     this.y = y;
 };
 
-Vector.prototype.add = function(vec) {
-    this.x += vec.x;
-    this.y += vec.y;
+Vector.prototype.math = function(vec) {
+    this.x -= vec.x;
+    this.y -= vec.y;
     return this;
 };
 
-Vector.prototype.addScalar = function(scalar) {
-    this.x += scalar;
-    this.y += scalar;
+Vector.prototype.scalar = function(scalar) {
+    this.x -= scalar;
+    this.y -= scalar;
 };
 
 Vector.prototype.multScalar = function(scalar) {        //for air resistance
@@ -20,6 +20,5 @@ Vector.prototype.multScalar = function(scalar) {        //for air resistance
     this.y *= scalar;
     return this;
 };
-
 
 module.exports.vector = Vector;
