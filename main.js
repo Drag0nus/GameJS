@@ -14,7 +14,16 @@ app.use(bodyParser.json());
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(callback) {
-    var characters = require('./modules/characters');
+
+    var char_human = Object.create(characters.Human).constructor(new vector.vector(3, 4),
+        'human', null, 10, 4,
+        new vector.vector(5, 5),
+        10, 5, 80, false, 2);
+
+    var char_demon = Object.create(characters.Demon).constructor(new vector.vector(100, 100),
+        'demon', null, 15, 5,
+        new vector.vector(30, 30),
+        5, 10, 100, true, 4);
 
     var Schema = mongoose.Schema;
     var racesSchema = new Schema({
@@ -117,28 +126,31 @@ db.once('open', function(callback) {
         next();
     });
 
-    app.get('/moveTo/human/:x/:y', function (req, res, next) {
-        characters.Human.moveTo(req.params.x, req.params.y);
-        character.nextPosition = new vector.vector(req.params.x, req.params.y);
-        character.save();
-        console.log(characters.Human.position);
-        res.status(200).send('Successfully moved! New position is in console log.');
-        next();
+    app.get('/human/moveTo/:x/:y', function (req, res, next) {
+            character.nextPosition = new vector.vector(req.params.x, req.params.y);
+            char_human.moveTo(req.params.x, req.params.y);
+            character.currentPosition = char_human.position;
+            character.save();
+            console.log(char_human.position);
+            res.status(200).send('Successfully moved! New position is in console log.');
+            next();
     });
 
     app.get('/demon/moveTo/:x/:y', function (req, res, next) {
-        demon.moveTo(req.params.x, req.params.y);
-        console.log(demon.position);
+        character.nextPosition = new vector.vector(req.params.x, req.params.y);
+        char_demon.moveTo(req.params.x, req.params.y);
+        character.save();
+        console.log(char_demon.position);
         res.status(200).send('Successfully moved! New position is in console log.');
         next();
     });
 
     app.get('/:character/fight/:enemy', function (req, res, next) {
         if (req.params.character == 'human' && req.params.enemy == 'demon') {
-            human.fight(demon);
+            char_human.fight(char_demon);
             res.status(200).send('Human wants to fight with demon. Fight begins. Look in console!');
         } else if (req.params.character == 'demon' && req.params.enemy == 'human') {
-            demon.fight(human);
+            char_demon.fight(char_human);
             res.status(200).send('Demon wants to fight with human. Fight begins. Look in console!');
         } else {
             res.status(500).send('Error!');
@@ -149,3 +161,4 @@ db.once('open', function(callback) {
 app.listen(3030, function () {
     console.log('Server started....');
 });
+

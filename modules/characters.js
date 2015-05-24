@@ -54,9 +54,9 @@ var Human = {
         for(this.vitality; this.vitality >= 0;) {
             for(enemy.vitality; enemy.vitality >= 0;) {
                 this.vitality -= enemy.attack;
-                console.log('New ' + this.fullName + ' health is ' + this.vitality);
+                console.log(this.vitality);
                 enemy.vitality -= this.attack;
-                console.log('New ' + enemy.fullName + ' health is ' + enemy.vitality);
+                console.log(enemy.vitality);
 
                 if (enemy.vitality <= 0 || this.vitality <= 0) {
                     console.log('Fight is over');
@@ -65,19 +65,16 @@ var Human = {
             }
         }
         if (this.vitality < enemy.vitality) {
-            return console.log(this.fullName + ' died');
+            return console.log(this.race + ' died');
         } else {
-            return console.log(enemy.fullName + ' died');
+            return console.log(enemy.race + ' died');
         }
     }
 };
 
 var Demon = Object.create(Human);
-Demon.constructor = function(position, race, gender, fullName, attack, defence, maxDistance, str, dex, vit, abilityToFly, attackDistance) {
+Demon.constructor = function(position, race, gender, attack, defence, maxDistance, str, dex, vit, abilityToFly, attackSpeed) {
     Human.constructor.apply(this, arguments);
-    if (abilityToFly == true) {
-        this.distance = distance + 10;
-    }
     return this;
 };
 
