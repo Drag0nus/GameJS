@@ -129,8 +129,8 @@ db.once('open', function(callback) {
     app.get('/human/moveTo/:x/:y', function (req, res, next) {
             character.nextPosition = new vector.vector(req.params.x, req.params.y);
             char_human.moveTo(req.params.x, req.params.y);
-            character.currentPosition = char_human.position;
-            character.save();
+            character.mainParameters.currentPosition = char_human.position;
+            character.update();
             console.log(char_human.position);
             res.status(200).send('Successfully moved! New position is in console log.');
             next();
@@ -139,7 +139,8 @@ db.once('open', function(callback) {
     app.get('/demon/moveTo/:x/:y', function (req, res, next) {
         character.nextPosition = new vector.vector(req.params.x, req.params.y);
         char_demon.moveTo(req.params.x, req.params.y);
-        character.save();
+        demon.currentPosition = char_demon.position;
+        demon.save();
         console.log(char_demon.position);
         res.status(200).send('Successfully moved! New position is in console log.');
         next();
