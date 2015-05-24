@@ -4,7 +4,7 @@ var astar = require('./astar.js');
 var world = require('./world');
 
 var Human = {
-    constructor: function(position, gender, fullName, attack, defence, maxDistance, str, dex, vit, attackDistance) {
+    constructor: function(position, gender, fullName, attack, defence, maxDistance, str, dex, vit, attackSpeed) {
         this.position = position;
         this.gender = gender;
         this.fullName = fullName;
@@ -17,7 +17,7 @@ var Human = {
         this.defence = defence;
 
         this.vitality = vit + defence;
-        this.attackDistance = attackDistance;
+        this.attackDistance = attackSpeed;
         return this;
     },
     moveTo: function(x, y) {
@@ -49,7 +49,6 @@ var Human = {
             console.log('Reached destination!');
             return this.position;
         }
-
     },
     fight: function(enemy) {
         for(this.vitality; this.vitality >= 0;) {

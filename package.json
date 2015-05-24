@@ -9,6 +9,8 @@
   "author": "Drag0nus",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.12.3"
+    "express": "^4.12.3",
+    "mongodb": "^2.0.33",
+    "mongoose": "^4.0.3"
   }
 }
